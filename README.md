@@ -1,5 +1,5 @@
 # morning-ritual-app
-A daily morning ritual habit tracker andorid app group project for CSc 317 - Mobile Development
+A daily morning ritual habit tracker android app group project for CSc 317 - Mobile Development
 
 **Group Members:** Victor Gomes, Marko Kreso, and Abhishek Agarwal
 
