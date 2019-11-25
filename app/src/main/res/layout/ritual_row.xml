@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/dailyRitualRow">
+
+    <TextView
+        android:id="@+id/ritualName"
+        android:text="placeholder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/normalText"
+        android:layout_weight="1"
+        android:layout_marginLeft="15dp" />
+
+    <CheckBox
+        android:id="@+id/ritualCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp" />
+
+</LinearLayout>

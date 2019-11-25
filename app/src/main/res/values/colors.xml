@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- COLOR PALETTE -->
+<!--
+#513B56 ~ Dark Purple
+#525174 ~ Blue Purple
+#348AA7 ~ Steel Blue
+#5DD39E ~ Medium Green
+#BCE784 ~ Light Green
+-->
+
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="black">#000000</color>
+    <color name="white">#EEEEEE</color>
+    <color name="darkPurple">#513B56</color>
+    <color name="bluePurple">#525174</color>
+    <color name="steelBlue">#348AA7</color>
+    <color name="mediumGreen">#5DD39E</color>
+    <color name="lightGreen">#BCE784</color>
 </resources>
