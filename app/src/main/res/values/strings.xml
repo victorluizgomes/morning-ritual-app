@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Morning Ritual Tracker</string>
+    <string name="title_activity_stats">StatsActivity</string>
+    <string name="Header">STATISTICS</string>
 </resources>
