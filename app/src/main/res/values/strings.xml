@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Morning Ritual Tracker</string>
     <string name="title_activity_stats">StatsActivity</string>
-    <string name="Header">STATISTICS</string>
+    <string name="placeholder_motivation_quote">You are a badass, a skyscrapper is built by placing one brick a day - Victor Gomes</string>
 </resources>

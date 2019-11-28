@@ -28,13 +28,12 @@ public class StatsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
 
-        DatePicker simpleDatePicker = (DatePicker)findViewById(R.id.calendar); // initiate a date picker
+        // initiate a date picker
+        DatePicker simpleDatePicker = (DatePicker)findViewById(R.id.calendar);
 
-        simpleDatePicker.setSpinnersShown(false); // set false value for the spinner shown function
-
-        simpleDatePicker.setEnabled(false);
-
-        simpleDatePicker.getCalendarView().setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        // TODO: this takes the text but breaks the UI
+        // TODO 2: have the Calendar take less space, maybe a different type
+        /*simpleDatePicker.getCalendarView().setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 System.out.println("finally found the listener, the date is: year " + year + ", month "  + ( month + 1) + ", dayOfMonth " + dayOfMonth);
@@ -42,10 +41,8 @@ public class StatsActivity extends AppCompatActivity {
                     clicked = false;
                     date = "" + year + (month+1) + dayOfMonth;
                 }
-
             }
-        });
-
+        });*/
 
 //        List<Calendar> dates = new ArrayList<>();
 //        dates.add(calendar);
@@ -59,11 +56,8 @@ public class StatsActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             return null;
         }
-
-
         protected void onPostExecute() {
 
         }
     }
-
 }

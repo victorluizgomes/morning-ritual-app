@@ -3,6 +3,7 @@ package com.example.morningritualtracker;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -24,6 +25,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
+
+    // TODO: Main page needs to either be a fragment, or other pages need to be activities
 
     private SimpleAdapter adapter;
     private ListView ritualsView;
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         setupListAdapter();
     }
 
+    // Some default morning rituals
     private void loadDefaultRituals() {
 
         morningRituals.add("Meditate");
@@ -118,4 +122,18 @@ public class MainActivity extends AppCompatActivity {
         return image;
     }
 
+    public void openStats(View v) {
+        Intent intent = new Intent(this, StatsActivity.class);
+        startActivity(intent);
+    }
+
+    public void completeDayPage(View v) {
+        completePageFragment cp = new completePageFragment();
+        cp.setContainerActivity(this);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.outer, cp);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 }

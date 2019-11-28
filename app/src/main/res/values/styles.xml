@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/darkPurple</item>
         <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorAccent">@color/lightGreen</item>
+        <item name="colorAccent">@color/darkPurple</item>
     </style>
 
     <style name="homeTitle" parent="TextAppearance.AppCompat">
@@ -37,6 +37,12 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">20dp</item>
         <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+    <style name="motivationText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">24dp</item>
+        <item name="android:layout_marginTop">50dp</item>
     </style>
 
     <style name="completeBtn" parent="TextAppearance.AppCompat.Button">

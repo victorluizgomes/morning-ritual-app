@@ -13,7 +13,8 @@
             android:name=".StatsActivity"
             android:label="@string/title_activity_stats"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
