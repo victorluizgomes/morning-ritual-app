@@ -1,7 +1,6 @@
 package com.example.morningritualtracker;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -41,35 +40,7 @@ public class MainPageFragment extends Fragment {
     String currentPhotoPath;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    public void setPicButton(){
-        Button button = (Button) inflaterView.findViewById(R.id.photoBtn);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dispatchTakePictureIntent();
-            }
-        });
-    }
 
-    public void setCompleteButton(){
-        Button button = (Button) inflaterView.findViewById(R.id.completeBtn);
-        button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                completeDayPage();
-            }
-        });
-    }
-
-    public void setStatButtion(){
-        Button button = (Button) inflaterView.findViewById(R.id.statsBtn);
-        button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                openStats();
-            }
-        });
-    }
 
     public MainPageFragment(Activity activity) {
         // Required empty public constructor
@@ -93,7 +64,8 @@ public class MainPageFragment extends Fragment {
         setupListAdapter(inflaterView);
         setPicButton();
         setCompleteButton();
-        setStatButtion();
+        setStatButton();
+        setHelpButton();
         return inflaterView;
     }
     // Some default morning rituals
@@ -172,6 +144,13 @@ public class MainPageFragment extends Fragment {
         Intent intent = new Intent(containerActivity, StatsActivity.class);
         startActivity(intent);
     }
+    public void openHelp(){
+        HelpFragment fragment = new HelpFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.outer, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
     public void completeDayPage() {
         System.out.println("COMPLETE");
@@ -183,4 +162,42 @@ public class MainPageFragment extends Fragment {
         transaction.commit();
     }
 
+    public void setPicButton(){
+        Button button = (Button) inflaterView.findViewById(R.id.photoBtn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dispatchTakePictureIntent();
+            }
+        });
+    }
+
+    public void setCompleteButton(){
+        Button button = (Button) inflaterView.findViewById(R.id.completeBtn);
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                completeDayPage();
+            }
+        });
+    }
+
+    public void setStatButton(){
+        Button button = (Button) inflaterView.findViewById(R.id.statsBtn);
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                openStats();
+            }
+        });
+    }
+    public void setHelpButton(){
+        Button button = (Button) inflaterView.findViewById(R.id.helpBtn);
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                openHelp();
+            }
+        });
+    }
 }
