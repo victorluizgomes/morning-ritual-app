@@ -26,7 +26,13 @@ public class completePageFragment extends Fragment {
 
     String apiKey = "f996a4ca824287b5197b5c0057aabeee8d3fff16";
     View inflaterView;
-    
+
+    private Activity containerActivity = null;
+
+    public void setContainerActivity(Activity containerActivity) {
+        this.containerActivity = containerActivity;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
