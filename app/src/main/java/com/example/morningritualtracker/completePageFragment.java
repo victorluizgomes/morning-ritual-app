@@ -26,13 +26,7 @@ public class completePageFragment extends Fragment {
 
     String apiKey = "f996a4ca824287b5197b5c0057aabeee8d3fff16";
     View inflaterView;
-
-    private Activity containerActivity = null;
-
-    public void setContainerActivity(Activity containerActivity) {
-        this.containerActivity = containerActivity;
-    }
-
+    
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
@@ -60,7 +54,6 @@ public class completePageFragment extends Fragment {
 
                 return quote + " - " + author;
 
-
             }
             catch (Exception e){
                 e.printStackTrace();
@@ -73,6 +66,8 @@ public class completePageFragment extends Fragment {
             tv.setText(quote);
         }
     }
+
+
     private JSONObject createJson(BufferedReader in){
         String json = "";
         String line;
