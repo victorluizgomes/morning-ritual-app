@@ -19,11 +19,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Random;
 
 public class completePageFragment extends Fragment {
 
     // TODO 2: Get the monthly graph to display instead of the placeholder
 
+    //Uses the paper quotes api to grab quotes
     String apiKey = "f996a4ca824287b5197b5c0057aabeee8d3fff16";
     View inflaterView;
 
@@ -34,12 +36,19 @@ public class completePageFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+
+
+    }
+    @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
         inflaterView = inflater.inflate(R.layout.fragment_complete_page, container, false);
         new QuoteDownloader().execute();
-
         return inflaterView;
     }
 
@@ -48,14 +57,16 @@ public class completePageFragment extends Fragment {
         @Override
         protected String doInBackground(URL... urls) {
             try {
-                URL url = new URL("https://api.paperquotes.com/apiv1/quotes/?tags=motivation&curated=1&limit=1");
+                URL url = new URL("https://api.paperquotes.com/apiv1/quotes/?tags=motivation&curated=1&limit=4");
                 URLConnection urlConn = url.openConnection();
                 urlConn.setRequestProperty("Authorization", "Token " + apiKey);
 
                 BufferedReader content = new BufferedReader(new InputStreamReader((InputStream) urlConn.getContent()));
                 JSONObject json = createJson(content);
-                String quote = json.getJSONArray("results").getJSONObject(0).getString("quote");
-                String author = json.getJSONArray("results").getJSONObject(0).getString("author");
+                Random rand = new Random();
+                int index = rand.nextInt(4);
+                String quote = json.getJSONArray("results").getJSONObject(index).getString("quote");
+                String author = json.getJSONArray("results").getJSONObject(index).getString("author");
 
 
                 return quote + " - " + author;
@@ -82,6 +93,7 @@ public class completePageFragment extends Fragment {
                 json += line;
             }
         in.close();
+            System.out.println(json);
         return new JSONObject(json);
         }
         catch (Exception e){
