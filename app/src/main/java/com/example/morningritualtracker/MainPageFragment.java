@@ -57,7 +57,7 @@ public class MainPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        inflaterView = inflater.inflate(R.layout.fragment_main_page_fragement, container, false);
+        inflaterView = inflater.inflate(R.layout.fragment_main_page, container, false);
         setupListAdapter(inflaterView);
         setPicButton();
         setCompleteButton();
@@ -144,9 +144,8 @@ public class MainPageFragment extends Fragment {
         transaction.replace(R.id.outer, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
-        //Intent intent = new Intent(containerActivity, StatsActivity.class);
-        //startActivity(intent);
     }
+
     public void openHelp(){
         HelpFragment fragment = new HelpFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();

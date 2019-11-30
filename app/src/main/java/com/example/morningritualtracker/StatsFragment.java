@@ -5,14 +5,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 public class StatsFragment extends Fragment {
 
     private Activity containerActivity = null;
-    View inflaterView;
+    private View inflaterView;
 
     public void setContainerActivity(Activity containerActivity) {
         this.containerActivity = containerActivity;
@@ -23,6 +25,7 @@ public class StatsFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         inflaterView = inflater.inflate(R.layout.fragment_stats, container, false);
+        setSeeDayButton();
         return inflaterView;
     }
 
@@ -47,5 +50,24 @@ public class StatsFragment extends Fragment {
         dates.add(calendar);
         Calendar[] disabledDays1 = dates.toArray(new Calendar[dates.size()]);
         dpd.setDisabledDays(disabledDays1); */
+    }
+
+    public void openDay(){
+        DayFragment fragment = new DayFragment();
+        fragment.setContainerActivity(containerActivity);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.outer, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void setSeeDayButton() {
+        Button button = (Button) inflaterView.findViewById(R.id.seeDay);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDay();
+            }
+        });
     }
 }
