@@ -51,9 +51,6 @@ public class MainPageFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadDefaultRituals();
-
-
-
     }
 
     @Override
@@ -141,8 +138,14 @@ public class MainPageFragment extends Fragment {
     }
 
     public void openStats() {
-        Intent intent = new Intent(containerActivity, StatsActivity.class);
-        startActivity(intent);
+        StatsFragment fragment = new StatsFragment();
+        fragment.setContainerActivity(containerActivity);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.outer, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+        //Intent intent = new Intent(containerActivity, StatsActivity.class);
+        //startActivity(intent);
     }
     public void openHelp(){
         HelpFragment fragment = new HelpFragment();
@@ -154,7 +157,7 @@ public class MainPageFragment extends Fragment {
 
     public void completeDayPage() {
         System.out.println("COMPLETE");
-        completePageFragment cp = new completePageFragment();
+        CompletePageFragment cp = new CompletePageFragment();
         cp.setContainerActivity(containerActivity);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.outer, cp);
@@ -191,6 +194,7 @@ public class MainPageFragment extends Fragment {
             }
         });
     }
+
     public void setHelpButton(){
         Button button = (Button) inflaterView.findViewById(R.id.helpBtn);
         button.setOnClickListener(new View.OnClickListener(){

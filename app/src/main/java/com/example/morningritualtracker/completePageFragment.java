@@ -21,7 +21,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Random;
 
-public class completePageFragment extends Fragment {
+public class CompletePageFragment extends Fragment {
 
     // TODO 2: Get the monthly graph to display instead of the placeholder
 
@@ -38,11 +38,8 @@ public class completePageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
@@ -83,7 +80,6 @@ public class completePageFragment extends Fragment {
             tv.setText(quote);
         }
     }
-
 
     private JSONObject createJson(BufferedReader in){
         String json = "";
