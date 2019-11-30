@@ -15,6 +15,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -40,10 +41,35 @@ public class MainPageFragment extends Fragment {
     String currentPhotoPath;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    public void takePic(View v){
-        dispatchTakePictureIntent();
+    public void setPicButton(){
+        Button button = (Button) inflaterView.findViewById(R.id.photoBtn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dispatchTakePictureIntent();
+            }
+        });
     }
 
+    public void setCompleteButton(){
+        Button button = (Button) inflaterView.findViewById(R.id.completeBtn);
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                completeDayPage();
+            }
+        });
+    }
+
+    public void setStatButtion(){
+        Button button = (Button) inflaterView.findViewById(R.id.statsBtn);
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                openStats();
+            }
+        });
+    }
 
     public MainPageFragment(Activity activity) {
         // Required empty public constructor
@@ -63,9 +89,12 @@ public class MainPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View inflate = inflater.inflate(R.layout.fragment_main_page_fragement, container, false);
-        setupListAdapter(inflate);
-        return inflate;
+        inflaterView = inflater.inflate(R.layout.fragment_main_page_fragement, container, false);
+        setupListAdapter(inflaterView);
+        setPicButton();
+        setCompleteButton();
+        setStatButtion();
+        return inflaterView;
     }
     // Some default morning rituals
     private void loadDefaultRituals() {
@@ -139,15 +168,15 @@ public class MainPageFragment extends Fragment {
         return image;
     }
 
-    public void openStats(View v) {
+    public void openStats() {
         Intent intent = new Intent(containerActivity, StatsActivity.class);
         startActivity(intent);
     }
 
-    public void completeDayPage(View v) {
+    public void completeDayPage() {
+        System.out.println("COMPLETE");
         completePageFragment cp = new completePageFragment();
         cp.setContainerActivity(containerActivity);
-
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.outer, cp);
         transaction.addToBackStack(null);
