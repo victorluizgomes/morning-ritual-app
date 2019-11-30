@@ -15,11 +15,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -140,6 +144,20 @@ public class MainPageFragment extends Fragment {
         return image;
     }
 
+    private HashMap<String, Boolean> getChecklistStatus(){
+        View v;
+        CheckBox box;
+        TextView text;
+        HashMap<String, Boolean> activitiesList = new HashMap<>();
+        for(int i = 0; i < ritualsView.getCount(); i++){
+            v = ritualsView.getChildAt(i);
+            box = (CheckBox) v.findViewById(R.id.ritualCheck);
+            text = (TextView) v.findViewById(R.id.ritualName);
+            activitiesList.put((String) text.getText(), box.isChecked());
+        }
+        return activitiesList;
+    }
+
     public void openStats() {
         Intent intent = new Intent(containerActivity, StatsActivity.class);
         startActivity(intent);
@@ -153,7 +171,7 @@ public class MainPageFragment extends Fragment {
     }
 
     public void completeDayPage() {
-        System.out.println("COMPLETE");
+        saveData(getChecklistStatus(), currentPhotoPath);
         completePageFragment cp = new completePageFragment();
         cp.setContainerActivity(containerActivity);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -173,6 +191,7 @@ public class MainPageFragment extends Fragment {
     }
 
     public void setCompleteButton(){
+
         Button button = (Button) inflaterView.findViewById(R.id.completeBtn);
         button.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -199,5 +218,26 @@ public class MainPageFragment extends Fragment {
                 openHelp();
             }
         });
+    }
+    public void saveData(HashMap<String, Boolean> lists, String path){
+        String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Date());
+        File root = new File(containerActivity.getExternalFilesDir(null) + "/days");
+        System.out.println(root.getAbsoluteFile());
+        if(!root.exists()){
+            root.mkdirs();
+
+        }
+        try {
+            File saveFile = new File(root, timeStamp);
+            FileOutputStream fout = new FileOutputStream(saveFile);
+            ObjectOutputStream oout = new ObjectOutputStream(fout);
+            CompletedDay complete = new CompletedDay(lists, path);
+            oout.writeObject(complete);
+            fout.close();
+            oout.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
