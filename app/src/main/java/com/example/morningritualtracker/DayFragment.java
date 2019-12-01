@@ -92,7 +92,6 @@ public class DayFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     private void setupTaskList(HashMap<String, Boolean> tasks){
