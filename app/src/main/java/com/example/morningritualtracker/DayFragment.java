@@ -31,9 +31,7 @@ public class DayFragment extends Fragment {
     private View inflaterView;
     private List<String> thingsDone = new ArrayList<>();
 
-    // TODO: Need to get the picture from the data that day
-    // Need to replace the text of the title with the day picked
-    // Need to get the list of things accomplished and not accomplished
+    // TODO Need to get the list of things accomplished and not accomplished
 
     public void setContainerActivity(Activity containerActivity) {
         this.containerActivity = containerActivity;
@@ -98,13 +96,11 @@ public class DayFragment extends Fragment {
     }
 
     private void setupTaskList(HashMap<String, Boolean> tasks){
-
         for (String task : tasks.keySet()) {
             if (tasks.get(task)) {
                 thingsDone.add(task);
             }
         }
-
     }
 
     // find a way to show it better with things not accomplished? or maybe checked checkboxes
