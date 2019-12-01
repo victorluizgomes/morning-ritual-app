@@ -44,8 +44,6 @@ public class MainPageFragment extends Fragment {
     String currentPhotoPath;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
-
-
     public MainPageFragment(Activity activity) {
         // Required empty public constructor
         containerActivity = activity;
@@ -69,6 +67,7 @@ public class MainPageFragment extends Fragment {
         setHelpButton();
         return inflaterView;
     }
+
     // Some default morning rituals
     private void loadDefaultRituals() {
 
@@ -98,7 +97,6 @@ public class MainPageFragment extends Fragment {
                 R.layout.ritual_row, from, to);
         ritualsView = (ListView) inflater.findViewById(R.id.dailyRitualList);
         ritualsView.setAdapter(adapter);
-
     }
 
     private void dispatchTakePictureIntent() {
@@ -226,6 +224,7 @@ public class MainPageFragment extends Fragment {
             }
         });
     }
+
     public void saveData(HashMap<String, Boolean> lists, String path){
         String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Date());
         File root = new File(containerActivity.getExternalFilesDir(null) + "/days");
