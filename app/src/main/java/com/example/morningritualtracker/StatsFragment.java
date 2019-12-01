@@ -72,7 +72,7 @@ public class StatsFragment extends Fragment {
         //Passes data on to new fragment
         Bundle args = new Bundle();
         args.putSerializable("day", getDate(dateSelected));
-        args.putSerializable("date", dateSelected);
+        args.putString("date", dateSelected);
 
 
         DayFragment fragment = new DayFragment();
