@@ -80,15 +80,15 @@ public class DayFragment extends Fragment {
     private void setupImageView(String imagePath) {
 
         ImageView iv = inflaterView.findViewById(R.id.stockPhoto);
-
-        File imgFile = new File(imagePath);
-        Bitmap imageBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-        Matrix matrix = new Matrix();
-        matrix.postRotate(90);
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(imageBitmap, 200, 350, true);
-        Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
-        iv.setImageBitmap(rotatedBitmap);
-
+        if(imagePath != null){
+            File imgFile = new File(imagePath);
+            Bitmap imageBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            Matrix matrix = new Matrix();
+            matrix.postRotate(90);
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(imageBitmap, 200, 350, true);
+            Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+            iv.setImageBitmap(rotatedBitmap);
+        }
     }
 
     @Override
