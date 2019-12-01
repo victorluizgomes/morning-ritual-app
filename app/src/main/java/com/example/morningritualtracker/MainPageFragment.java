@@ -61,6 +61,7 @@ public class MainPageFragment extends Fragment {
         setupListAdapter(inflaterView);
         setPicButton();
         setCompleteButton();
+        setCustomizeButton();
         setStatButton();
         setHelpButton();
         return inflaterView;
@@ -154,6 +155,15 @@ public class MainPageFragment extends Fragment {
         transaction.commit();
     }
 
+    public void openCustomize() {
+        CustomizeFragment fragment = new CustomizeFragment();
+        fragment.setContainerActivity(containerActivity);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.outer, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
     public void completeDayPage() {
         System.out.println("COMPLETE");
         CompletePageFragment cp = new CompletePageFragment();
@@ -190,6 +200,16 @@ public class MainPageFragment extends Fragment {
             @Override
             public void onClick(View view){
                 openStats();
+            }
+        });
+    }
+
+    public void setCustomizeButton() {
+        Button button = (Button) inflaterView.findViewById(R.id.customizeBtn);
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                openCustomize();
             }
         });
     }

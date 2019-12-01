@@ -8,22 +8,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DayFragment extends Fragment {
+public class CustomizeFragment extends Fragment {
 
     private Activity containerActivity = null;
-    private ListView daysView = null;
     private View inflaterView;
-    private List<String> thingsDone = new ArrayList<>();
-
-    // TODO: Need to get the picture from the data that day
-    // Need to replace the text of the title with the day picked
-    // Need to get the list of things accomplished and not accomplished
+    private ListView ritualListView = null;
+    private List<String> ritualList = new ArrayList<>();
 
     public void setContainerActivity(Activity containerActivity) {
         this.containerActivity = containerActivity;
@@ -33,33 +28,29 @@ public class DayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        inflaterView = inflater.inflate(R.layout.fragment_day, container, false);
-        setupDefaultsForList();
+        inflaterView = inflater.inflate(R.layout.fragment_customize, container, false);
+        setupDefaultsTestForList();
         setupListAdapter(inflaterView);
         return inflaterView;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    private void setupDefaultsForList(){
-        thingsDone.add("Brush Teeth");
-        thingsDone.add("Take Shower");
-        thingsDone.add("Journal");
-        thingsDone.add("Meditate");
+    private void setupDefaultsTestForList(){
+        ritualList.add("Brush Teeth");
+        ritualList.add("Take Shower");
+        ritualList.add("Journal");
+        ritualList.add("Meditate");
     }
 
     // find a way to show it better with things not accomplished? or maybe checked checkboxes
 
     private void setupListAdapter(View inflater){
-        daysView = (ListView)inflater.findViewById(R.id.listCompleted);
+        ritualListView = (ListView)inflater.findViewById(R.id.listCustomize);
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(containerActivity,
-                R.layout.day_row, R.id.dayCompleted, thingsDone);
+                R.layout.customize_row, R.id.customizeText, ritualList);
 
-        System.out.println(daysView);
-        daysView.setAdapter(arrayAdapter);
+        ritualListView.setAdapter(arrayAdapter);
     }
+
+
 }
