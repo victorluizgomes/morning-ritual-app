@@ -21,9 +21,12 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,7 +55,26 @@ public class MainPageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadDefaultRituals();
+        File root = new File(containerActivity.getExternalFilesDir(null) + "/list");
+        if(!root.exists()){
+            root.mkdirs();
+            try {
+                File defaultList = new File(root, "customList");
+                HashMap<String, Boolean> tasks = new HashMap<>();
+                loadDefaultRituals(tasks);
+                FileOutputStream outputStream = new FileOutputStream(defaultList);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+                objectOutputStream.writeObject(tasks);
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+        loadRitualsFromFile();
     }
 
     @Override
@@ -69,15 +91,31 @@ public class MainPageFragment extends Fragment {
         return inflaterView;
     }
 
-    // Some default morning rituals
-    private void loadDefaultRituals() {
+    private void loadRitualsFromFile(){
+        File root = new File(containerActivity.getExternalFilesDir(null) + "/list");
+        try{
+            File tasksFile = new File(root, "customList");
+            FileInputStream inputStream = new FileInputStream(tasksFile);
+            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+            HashMap<String, Boolean> tasks = (HashMap<String, Boolean>) objectInputStream.readObject();
+            
+            for(String task: tasks.keySet()){
 
-        morningRituals.add("Meditate");
-        morningRituals.add("Drink water");
-        morningRituals.add("Go for a 10 minute walk");
-        morningRituals.add("Cold shower");
-        morningRituals.add("Gratitude journal");
-        morningRituals.add("Morning super shake");
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    // Some default morning rituals
+    private void loadDefaultRituals(HashMap<String, Boolean> tasks) {
+        tasks.put("Meditate", false);
+        tasks.put("Drink water", false);
+        tasks.put("Go for a 10 minute walk", false);
+        tasks.put("Cold shower", false);
+        tasks.put("Gratitude journal", false);
+        tasks.put("Morning super shake", false);
     }
 
     private void setupListAdapter(View inflater) {
@@ -182,7 +220,7 @@ public class MainPageFragment extends Fragment {
 
     public void completeDayPage() {
 
-        saveData(getChecklistStatus(), currentPhotoPath);
+        saveCompletedData(getChecklistStatus(), currentPhotoPath);
 
         System.out.println("COMPLETE");
         CompletePageFragment cp = new CompletePageFragment();
@@ -245,7 +283,7 @@ public class MainPageFragment extends Fragment {
         });
     }
 
-    public void saveData(HashMap<String, Boolean> lists, String path){
+    public void saveCompletedData(HashMap<String, Boolean> lists, String path){
         String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Date());
         File root = new File(containerActivity.getExternalFilesDir(null) + "/days");
         System.out.println(root.getAbsoluteFile());

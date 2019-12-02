@@ -15,9 +15,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.outer, fragment);
         transaction.addToBackStack(null);
-        System.out.println("TEST2");
         transaction.commit();
-
     }
 
 
