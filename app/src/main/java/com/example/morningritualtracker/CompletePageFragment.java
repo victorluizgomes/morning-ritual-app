@@ -54,7 +54,7 @@ public class CompletePageFragment extends Fragment {
         @Override
         protected String doInBackground(URL... urls) {
             try {
-                URL url = new URL("https://api.paperquotes.com/apiv1/quotes/?tags=motivation&curated=1&limit=4");
+                URL url = new URL("https://api.paperquotes.com/apiv1/quotes/?&curated=1&limit=4");
                 URLConnection urlConn = url.openConnection();
                 urlConn.setRequestProperty("Authorization", "Token " + apiKey);
 
@@ -64,9 +64,11 @@ public class CompletePageFragment extends Fragment {
                 int index = rand.nextInt(4);
                 String quote = json.getJSONArray("results").getJSONObject(index).getString("quote");
                 String author = json.getJSONArray("results").getJSONObject(index).getString("author");
+                if(author.length() < 2){
+                    author = "Unknown";
+                }
 
-
-                return quote + " - " + author;
+                return quote + "\n\n - " + author;
 
             }
             catch (Exception e){

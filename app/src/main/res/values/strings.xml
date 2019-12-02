@@ -6,5 +6,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="help_title">Help Page</string>
-    <string name="help_body">This app is suppose to help people track their morning routine.</string>
+    <string name="help_body">This app is suppose to help people track their morning routine. Upon selecting complete on the main screen the app will save what
+        the user has accomplished and will store this information along with the user\'s photo in storage. It also allows
+        a user to add additional tasks as they wish to storage and will preserve their routine for every morning.
+        It will then transfer the user to a congratulations page which will grab a new motivational quote each day and present the user
+        with their weekly statistics. The stats page will display the users progress in their morning ritual
+        for an entire month, a date selector will also be available so users can select specific days and see their photograph
+        for that day and what they have accomplished.
+    </string>
 </resources>
