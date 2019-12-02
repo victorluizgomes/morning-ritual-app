@@ -320,4 +320,15 @@ public class MainPageFragment extends Fragment {
             e.printStackTrace();
         }
     }
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        System.out.println("DESTROY");
+        HashMap<String, Boolean> checkReset = new HashMap<>();
+        for(String task: ritualState.keySet()){
+            checkReset.put(task, false);
+        }
+        saveRitualsToFile(checkReset);
+
+    }
 }
