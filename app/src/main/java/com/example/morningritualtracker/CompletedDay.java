@@ -12,6 +12,7 @@ public class CompletedDay implements Serializable {
         listViewItems = list;
         imagePath = directory;
     }
+
     public String getImagePath(){
         return imagePath;
     }
