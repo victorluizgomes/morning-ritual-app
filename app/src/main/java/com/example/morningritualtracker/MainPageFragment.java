@@ -41,7 +41,7 @@ public class MainPageFragment extends Fragment {
     private ListView ritualsView;
     private View inflaterView;
     private List<HashMap<String, String>> rituals;
-
+    private HashMap<String, Boolean> ritualState;
     private List<String> morningRituals = new ArrayList<>();
 
     String currentPhotoPath;
@@ -71,17 +71,14 @@ public class MainPageFragment extends Fragment {
             }
         }
     }
-    @Override
-    public void onResume(){
-        super.onResume();
-        loadRitualsFromFile();
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         inflaterView = inflater.inflate(R.layout.fragment_main_page, container, false);
+        loadRitualsFromFile();
         setupListAdapter(inflaterView);
         setPicButton();
         setCompleteButton();
@@ -92,15 +89,21 @@ public class MainPageFragment extends Fragment {
     }
 
     private void loadRitualsFromFile(){
+        System.out.println("HEHEXD");
         File root = new File(containerActivity.getExternalFilesDir(null) + "/list");
         try{
             File tasksFile = new File(root, "customList");
             FileInputStream inputStream = new FileInputStream(tasksFile);
             ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
             HashMap<String, Boolean> tasks = (HashMap<String, Boolean>) objectInputStream.readObject();
-            
+            System.out.println(tasks);
             for(String task: tasks.keySet()){
+                morningRituals.add(task);
 
+                if(tasks.get(task)){
+                    View v = inflaterView.findViewById(R.id.ritualCheck);
+                    System.out.println("TESTING12345");
+                }
             }
         }
         catch(Exception e){
