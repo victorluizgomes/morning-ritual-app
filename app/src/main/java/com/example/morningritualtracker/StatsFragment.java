@@ -64,11 +64,18 @@ public class StatsFragment extends Fragment {
 
         //Grabs date from calendar to yyyyMMdd format String
         DatePicker selectDate = (DatePicker) inflaterView.findViewById(R.id.calendar);
+
         String year = Integer.toString(selectDate.getYear());
         String month = Integer.toString(selectDate.getMonth()+1);
         String day = Integer.toString(selectDate.getDayOfMonth());
-        String dateSelected = year+month+day;
+        if(month.length() == 1){
+            month = "0" + month;
+        }
+        if(day.length() == 1){
+            day = "0" + day;
+        }
 
+        String dateSelected = year+month+day;
         //Passes data on to new fragment
         Bundle args = new Bundle();
         args.putSerializable("day", getDate(dateSelected));
@@ -95,7 +102,6 @@ public class StatsFragment extends Fragment {
     }
 
     public CompletedDay getDate(String dateSelected){
-        System.out.println("DATE: " + dateSelected);
         CompletedDay retrievedDate = null;
         try {
              retrievedDate = graphData.get(new SimpleDateFormat("yyyyMMdd").parse(dateSelected));

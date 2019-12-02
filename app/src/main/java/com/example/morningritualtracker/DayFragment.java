@@ -65,9 +65,10 @@ public class DayFragment extends Fragment {
         catch (Exception e){
             e.printStackTrace();
         }
-        String month = Integer.toString(cal.get(Calendar.MONTH));
+        String month = Integer.toString(cal.get(Calendar.MONTH)+1);
         String year  = Integer.toString(cal.get(Calendar.YEAR));
         String day   = Integer.toString(cal.get(Calendar.DAY_OF_MONTH));
+
 
         String title = month + "/" + day + "/" + year;
         TextView tv = (TextView) inflaterView.findViewById(R.id.dateTitle);
