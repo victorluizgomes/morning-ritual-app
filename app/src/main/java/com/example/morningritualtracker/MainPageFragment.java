@@ -40,7 +40,7 @@ public class MainPageFragment extends Fragment {
     private SimpleAdapter adapter;
     private ListView ritualsView;
     private View inflaterView;
-    private List<HashMap<String, String>> rituals;
+    private List<HashMap<String, Object>> rituals;
     private HashMap<String, Boolean> ritualState;
     private List<String> morningRituals = new ArrayList<>();
 
@@ -89,22 +89,35 @@ public class MainPageFragment extends Fragment {
     }
 
     private void loadRitualsFromFile(){
-        System.out.println("HEHEXD");
         File root = new File(containerActivity.getExternalFilesDir(null) + "/list");
         try{
             File tasksFile = new File(root, "customList");
             FileInputStream inputStream = new FileInputStream(tasksFile);
             ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
             HashMap<String, Boolean> tasks = (HashMap<String, Boolean>) objectInputStream.readObject();
+            inputStream.close();
+            objectInputStream.close();
             System.out.println(tasks);
+            ritualState = new HashMap<String, Boolean>();
+            morningRituals = new ArrayList<String>();
             for(String task: tasks.keySet()){
-                morningRituals.add(task);
-
-                if(tasks.get(task)){
-                    View v = inflaterView.findViewById(R.id.ritualCheck);
-                    System.out.println("TESTING12345");
-                }
+                    morningRituals.add(task);
+                    ritualState.put(task, tasks.get(task));
             }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    private void saveRitualsToFile(HashMap<String, Boolean> tasksList){
+        File root = new File(containerActivity.getExternalFilesDir(null) + "/list");
+        try{
+            File tasksFile = new File(root, "customList");
+            FileOutputStream outputStream = new FileOutputStream(tasksFile);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+            objectOutputStream.writeObject(tasksList);
+            objectOutputStream.close();
+            outputStream.close();
         }
         catch(Exception e){
             e.printStackTrace();
@@ -122,13 +135,12 @@ public class MainPageFragment extends Fragment {
     }
 
     private void setupListAdapter(View inflater) {
-
-        rituals = new ArrayList<HashMap<String, String>>();
-
+        System.out.println("TEST");
+        rituals = new ArrayList<HashMap<String, Object>>();
         for (int i = 0; i < morningRituals.size(); i++) {
-            HashMap<String, String> hm = new HashMap<String, String>();
+            HashMap<String, Object> hm = new HashMap<String, Object>();
             hm.put("task", morningRituals.get(i));
-            hm.put("check", "");
+            hm.put("check", ritualState.get(morningRituals.get(i)));
             rituals.add(hm);
         }
 
@@ -138,6 +150,7 @@ public class MainPageFragment extends Fragment {
         adapter = new SimpleAdapter(containerActivity, rituals,
                 R.layout.ritual_row, from, to);
         ritualsView = (ListView) inflater.findViewById(R.id.dailyRitualList);
+
         ritualsView.setAdapter(adapter);
     }
 
@@ -224,7 +237,7 @@ public class MainPageFragment extends Fragment {
     public void completeDayPage() {
 
         saveCompletedData(getChecklistStatus(), currentPhotoPath);
-
+        saveRitualsToFile(getChecklistStatus());
         System.out.println("COMPLETE");
         CompletePageFragment cp = new CompletePageFragment();
 
