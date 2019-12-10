@@ -29,6 +29,7 @@ import java.io.ObjectOutputStream;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -137,6 +138,7 @@ public class MainPageFragment extends Fragment {
     private void setupListAdapter(View inflater) {
         System.out.println("TEST");
         rituals = new ArrayList<HashMap<String, Object>>();
+        Collections.sort(morningRituals);
         for (int i = 0; i < morningRituals.size(); i++) {
             HashMap<String, Object> hm = new HashMap<String, Object>();
             hm.put("task", morningRituals.get(i));
@@ -237,7 +239,6 @@ public class MainPageFragment extends Fragment {
     public void completeDayPage() {
 
         saveCompletedData(getChecklistStatus(), currentPhotoPath);
-        saveRitualsToFile(getChecklistStatus());
         System.out.println("COMPLETE");
         CompletePageFragment cp = new CompletePageFragment();
 
@@ -329,6 +330,10 @@ public class MainPageFragment extends Fragment {
             checkReset.put(task, false);
         }
         saveRitualsToFile(checkReset);
-
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        saveRitualsToFile(getChecklistStatus());
     }
 }

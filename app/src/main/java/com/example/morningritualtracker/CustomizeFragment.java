@@ -15,8 +15,11 @@ import androidx.fragment.app.Fragment;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -45,6 +48,12 @@ public class CustomizeFragment extends Fragment {
         return inflaterView;
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        saveRitualsToFile(ritualState);
+    }
+
     private void setUpAddButton(){
         Button button = inflaterView.findViewById(R.id.addHabit);
         button.setOnClickListener(new View.OnClickListener(){
@@ -70,13 +79,17 @@ public class CustomizeFragment extends Fragment {
         );
     }
     private void removeLastHabit(){
-        morningRituals.remove(morningRituals.size()-1);
+        String taskToRemove = morningRituals.get(morningRituals.size()-1);
+        ritualState.remove(taskToRemove);
+        morningRituals.remove(taskToRemove);
+
         arrayAdapter.notifyDataSetChanged();
     }
     private void addHabit(){
         EditText editText = inflaterView.findViewById(R.id.editAdd);
         String task = editText.getText().toString();
         morningRituals.add(task);
+        ritualState.put(task, false);
         arrayAdapter.notifyDataSetChanged();
     }
     private void loadRitualsFromFile() {
@@ -97,6 +110,7 @@ public class CustomizeFragment extends Fragment {
                 morningRituals.add(task);
                 ritualState.put(task, tasks.get(task));
             }
+            Collections.sort(morningRituals);
         }
             catch(
         Exception e)
@@ -112,11 +126,26 @@ public class CustomizeFragment extends Fragment {
 
     private void setupListAdapter(View inflater){
         ritualListView = (ListView)inflater.findViewById(R.id.listCustomize);
-
+        Collections.sort(morningRituals);
         arrayAdapter = new ArrayAdapter<String>(containerActivity,
                 R.layout.customize_row, R.id.customizeText, morningRituals);
 
         ritualListView.setAdapter(arrayAdapter);
+    }
+
+    private void saveRitualsToFile(HashMap<String, Boolean> tasksList){
+        File root = new File(containerActivity.getExternalFilesDir(null) + "/list");
+        try{
+            File tasksFile = new File(root, "customList");
+            FileOutputStream outputStream = new FileOutputStream(tasksFile);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+            objectOutputStream.writeObject(tasksList);
+            objectOutputStream.close();
+            outputStream.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
 
