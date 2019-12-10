@@ -1,6 +1,7 @@
 package com.example.morningritualtracker;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+
 
 import java.io.File;
 import java.io.FileInputStream;
