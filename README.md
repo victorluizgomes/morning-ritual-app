@@ -3,6 +3,19 @@ A daily morning ritual habit tracker android app group project for CSc 317 - Mob
 
 **Group Members:** Victor Gomes, Marko Kreso, and Abhishek Agarwal
 
+![Screenshot of home page](https://i.imgur.com/rU8619E.png)
+
+## Mission Statement
+Empower people to accomplish more by implementing a daily morning ritual.
+
+## The Problem
+People might try to have a productive morning and keep some healthy habits. 
+But may need some encouragement by easily keeping track of their morning rituals.
+
+## The Solution
+A simple and minimalist app that allows users to customize and keep track of their morning rituals. 
+And having the ability to see their progress overtime.
+
 ## Overview
 It keeps track of the morning routine that the user wants to keep track off every morning, with the ability to see their progress. When first opening the app they would be able to customize the things they want to keep track of everyday and see a help page. After that, every time they open the app, they will be able to check off the things in their morning ritual checklist and also take a picture for it. When they complete their daily routine an API call would bring up productivity and motivational quotes from the web, showing their streak and progress. They will also have the ability to share their progress with any of their contacts on their phone.
 
