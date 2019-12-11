@@ -21,11 +21,15 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -37,8 +41,8 @@ public class MainPageFragment extends Fragment {
     private SimpleAdapter adapter;
     private ListView ritualsView;
     private View inflaterView;
-    private List<HashMap<String, String>> rituals;
-
+    private List<HashMap<String, Object>> rituals;
+    private HashMap<String, Boolean> ritualState;
     private List<String> morningRituals = new ArrayList<>();
 
     String currentPhotoPath;
@@ -52,17 +56,34 @@ public class MainPageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadDefaultRituals();
+        File root = new File(containerActivity.getExternalFilesDir(null) + "/list");
+        if(!root.exists()){
+            root.mkdirs();
+            try {
+                File defaultList = new File(root, "customList");
+                HashMap<String, Boolean> tasks = new HashMap<>();
+                loadDefaultRituals(tasks);
+                FileOutputStream outputStream = new FileOutputStream(defaultList);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+                objectOutputStream.writeObject(tasks);
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
     }
+
 
     /*
     It will help us to inflate the fragment which we want to display
      */
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         inflaterView = inflater.inflate(R.layout.fragment_main_page, container, false);
+        loadRitualsFromFile();
         setupListAdapter(inflaterView);
         setPicButton();
         setCompleteButton();
@@ -72,28 +93,65 @@ public class MainPageFragment extends Fragment {
         return inflaterView;
     }
 
-    // Some default morning rituals
-    private void loadDefaultRituals() {
+    private void loadRitualsFromFile(){
+        File root = new File(containerActivity.getExternalFilesDir(null) + "/list");
+        try{
+            File tasksFile = new File(root, "customList");
+            FileInputStream inputStream = new FileInputStream(tasksFile);
+            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+            HashMap<String, Boolean> tasks = (HashMap<String, Boolean>) objectInputStream.readObject();
+            inputStream.close();
+            objectInputStream.close();
+            System.out.println(tasks);
+            ritualState = new HashMap<String, Boolean>();
+            morningRituals = new ArrayList<String>();
+            for(String task: tasks.keySet()){
+                    morningRituals.add(task);
+                    ritualState.put(task, tasks.get(task));
+            }
+            Collections.sort(morningRituals);
+        }
 
-        morningRituals.add("Meditate");
-        morningRituals.add("Drink water");
-        morningRituals.add("Go for a 10 minute walk");
-        morningRituals.add("Cold shower");
-        morningRituals.add("Gratitude journal");
-        morningRituals.add("Morning super shake");
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    private void saveRitualsToFile(HashMap<String, Boolean> tasksList){
+        File root = new File(containerActivity.getExternalFilesDir(null) + "/list");
+        try{
+            File tasksFile = new File(root, "customList");
+            FileOutputStream outputStream = new FileOutputStream(tasksFile);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+            objectOutputStream.writeObject(tasksList);
+            objectOutputStream.close();
+            outputStream.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    // Some default morning rituals
+    private void loadDefaultRituals(HashMap<String, Boolean> tasks) {
+        tasks.put("Meditate", false);
+        tasks.put("Drink water", false);
+        tasks.put("Go for a 10 minute walk", false);
+        tasks.put("Cold shower", false);
+        tasks.put("Gratitude journal", false);
+        tasks.put("Morning super shake", false);
     }
 
     /*
     This will set up the List Adapter for the Rituals
      */
     private void setupListAdapter(View inflater) {
-
-        rituals = new ArrayList<HashMap<String, String>>();
-
+        System.out.println("TEST");
+        rituals = new ArrayList<HashMap<String, Object>>();
+        Collections.sort(morningRituals);
         for (int i = 0; i < morningRituals.size(); i++) {
-            HashMap<String, String> hm = new HashMap<String, String>();
+            HashMap<String, Object> hm = new HashMap<String, Object>();
             hm.put("task", morningRituals.get(i));
-            hm.put("check", "");
+            hm.put("check", ritualState.get(morningRituals.get(i)));
             rituals.add(hm);
         }
 
@@ -103,6 +161,7 @@ public class MainPageFragment extends Fragment {
         adapter = new SimpleAdapter(containerActivity, rituals,
                 R.layout.ritual_row, from, to);
         ritualsView = (ListView) inflater.findViewById(R.id.dailyRitualList);
+
         ritualsView.setAdapter(adapter);
     }
 
@@ -201,8 +260,7 @@ public class MainPageFragment extends Fragment {
      */
     public void completeDayPage() {
 
-        saveData(getChecklistStatus(), currentPhotoPath);
-
+        saveCompletedData(getChecklistStatus(), currentPhotoPath);
         System.out.println("COMPLETE");
         CompletePageFragment cp = new CompletePageFragment();
 
@@ -277,11 +335,12 @@ public class MainPageFragment extends Fragment {
         });
     }
 
+
     /*
     When the button is clicked it will save the user data..
      */
 
-    public void saveData(HashMap<String, Boolean> lists, String path){
+    public void saveCompletedData(HashMap<String, Boolean> lists, String path){
         String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Date());
         File root = new File(containerActivity.getExternalFilesDir(null) + "/days");
         System.out.println(root.getAbsoluteFile());
@@ -301,5 +360,20 @@ public class MainPageFragment extends Fragment {
         catch(Exception e){
             e.printStackTrace();
         }
+    }
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        System.out.println("DESTROY");
+        HashMap<String, Boolean> checkReset = new HashMap<>();
+        for(String task: ritualState.keySet()){
+            checkReset.put(task, false);
+        }
+        saveRitualsToFile(checkReset);
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        saveRitualsToFile(getChecklistStatus());
     }
 }

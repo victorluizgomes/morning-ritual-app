@@ -1,6 +1,7 @@
 package com.example.morningritualtracker;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+
+import com.github.jinatonic.confetti.CommonConfetti;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -67,9 +70,11 @@ public class CompletePageFragment extends Fragment {
                              Bundle savedInstanceState) {
         inflaterView = inflater.inflate(R.layout.fragment_complete_page, container, false);
         new QuoteDownloader().execute();
+
         chart = (BarChart) inflaterView.findViewById(R.id.completeGraph);
         loadGraphData();
         display_graph();
+        CommonConfetti.rainingConfetti(container, new int[]{Color.RED, Color.GREEN, Color.YELLOW, Color.BLUE}).oneShot();
         return inflaterView;
     }
 
