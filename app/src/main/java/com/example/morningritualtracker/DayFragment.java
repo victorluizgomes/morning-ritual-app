@@ -9,12 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -49,7 +51,12 @@ public class DayFragment extends Fragment {
         if(day != null) {
             setupTaskList(day.getListViewItems());
             setupImageView(day.getImagePath());
+            setUpShareButton(day.getImagePath());
         }
+        else{
+            setUpShareButton(null);
+        }
+
 
         setupListAdapter(inflaterView);
         setupTitleDate(date);
@@ -76,6 +83,26 @@ public class DayFragment extends Fragment {
 
     }
 
+    private void setUpShareButton(final String imagePath){
+        Button button = inflaterView.findViewById(R.id.shareBtn);
+        button.setOnClickListener(new View.OnClickListener(){
+
+                                      @Override
+                                      public void onClick(View view) {
+                                          shareFragment(imagePath);
+                                      }
+                                  }
+
+        );
+    }
+    private void shareFragment(String imagePath){
+        ShareFragement share = new ShareFragement(containerActivity, imagePath, tasksCompleted());
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.outer, share);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
     private void setupImageView(String imagePath) {
 
         ImageView iv = inflaterView.findViewById(R.id.stockPhoto);
@@ -101,6 +128,14 @@ public class DayFragment extends Fragment {
                 thingsDone.add(task);
             }
         }
+    }
+
+    private String tasksCompleted(){
+        String tasksCompleted = "";
+        for(String task :thingsDone){
+            tasksCompleted += task + "\n";
+        }
+        return tasksCompleted;
     }
 
     // find a way to show it better with things not accomplished? or maybe checked checkboxes

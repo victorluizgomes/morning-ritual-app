@@ -50,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@id/middleText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/shareBtn" />
+        app:layout_constraintBottom_toTopOf="@id/shareBtn" />
 
     <Button
         android:id="@+id/shareBtn"
