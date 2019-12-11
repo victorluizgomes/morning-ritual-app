@@ -55,6 +55,9 @@ public class MainPageFragment extends Fragment {
         loadDefaultRituals();
     }
 
+    /*
+    It will help us to inflate the fragment which we want to display
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -80,6 +83,9 @@ public class MainPageFragment extends Fragment {
         morningRituals.add("Morning super shake");
     }
 
+    /*
+    This will set up the List Adapter for the Rituals
+     */
     private void setupListAdapter(View inflater) {
 
         rituals = new ArrayList<HashMap<String, String>>();
@@ -123,7 +129,9 @@ public class MainPageFragment extends Fragment {
             }
         }
     }
-
+    /*
+     This will help us to create a image file
+     */
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -140,6 +148,9 @@ public class MainPageFragment extends Fragment {
         return image;
     }
 
+    /*
+    This will create a Map with the Rituals and boolean result.
+     */
     private HashMap<String, Boolean> getChecklistStatus(){
         View v;
         CheckBox box;
@@ -153,7 +164,9 @@ public class MainPageFragment extends Fragment {
         }
         return activitiesList;
     }
-
+    /*
+    If the user clicks the Stats button we will open the stats fragments.
+     */
     public void openStats() {
         StatsFragment fragment = new StatsFragment();
         fragment.setContainerActivity(containerActivity);
@@ -162,7 +175,9 @@ public class MainPageFragment extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
+    /*
+    This will open the help fragments.
+     */
     public void openHelp(){
         HelpFragment fragment = new HelpFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -170,7 +185,9 @@ public class MainPageFragment extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
+    /*
+    This will open the customize fragment
+     */
     public void openCustomize() {
         CustomizeFragment fragment = new CustomizeFragment();
         fragment.setContainerActivity(containerActivity);
@@ -179,7 +196,9 @@ public class MainPageFragment extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
+    /*
+    This will be the fragment details when the user complete his tasks.
+     */
     public void completeDayPage() {
 
         saveData(getChecklistStatus(), currentPhotoPath);
@@ -193,7 +212,9 @@ public class MainPageFragment extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
+    /*
+    This will set the picture in place for the picture placeholder
+     */
     public void setPicButton(){
         Button button = (Button) inflaterView.findViewById(R.id.photoBtn);
         button.setOnClickListener(new View.OnClickListener() {
@@ -203,7 +224,9 @@ public class MainPageFragment extends Fragment {
             }
         });
     }
-
+    /*
+    When the button is clicked it goes to open the complete fragments.
+     */
     public void setCompleteButton(){
 
         Button button = (Button) inflaterView.findViewById(R.id.completeBtn);
@@ -214,7 +237,9 @@ public class MainPageFragment extends Fragment {
             }
         });
     }
-
+    /*
+        When the button is clicked it goes to open the stats fragments.
+    */
     public void setStatButton(){
         Button button = (Button) inflaterView.findViewById(R.id.statsBtn);
         button.setOnClickListener(new View.OnClickListener(){
@@ -224,6 +249,10 @@ public class MainPageFragment extends Fragment {
             }
         });
     }
+
+    /*
+    When the button is clicked it goes to open the customize fragments.
+     */
 
     public void setCustomizeButton() {
         Button button = (Button) inflaterView.findViewById(R.id.customizeBtn);
@@ -235,6 +264,9 @@ public class MainPageFragment extends Fragment {
         });
     }
 
+    /*
+    When the button is clicked it goes to open the help fragments.
+     */
     public void setHelpButton(){
         Button button = (Button) inflaterView.findViewById(R.id.helpBtn);
         button.setOnClickListener(new View.OnClickListener(){
@@ -244,6 +276,10 @@ public class MainPageFragment extends Fragment {
             }
         });
     }
+
+    /*
+    When the button is clicked it will save the user data..
+     */
 
     public void saveData(HashMap<String, Boolean> lists, String path){
         String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Date());

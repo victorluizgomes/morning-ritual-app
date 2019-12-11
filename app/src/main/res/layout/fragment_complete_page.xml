@@ -29,12 +29,11 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/completeTitle" />
 
-    <ImageView
+    <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/completeGraph"
         android:layout_width="350dp"
         android:layout_height="200dp"
         android:layout_marginTop="10dp"
-        android:src="@drawable/chart_placeholder"
         app:layout_constraintBottom_toTopOf="@id/completeShareBtn"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

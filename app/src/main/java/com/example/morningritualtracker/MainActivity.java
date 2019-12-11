@@ -7,6 +7,9 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
+    /*
+    This is the main activity of our program but we call the fragments to display our first page.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
