@@ -3,7 +3,9 @@ A daily morning ritual habit tracker android app group project for CSc 317 - Mob
 
 **Group Members:** Victor Gomes, Marko Kreso, and Abhishek Agarwal
 
-![Screenshot of home page](https://i.imgur.com/rU8619E.png)
+## Screenshots
+
+<img src="https://i.imgur.com/rU8619E.png" height="400"> <img src="https://i.imgur.com/7JCMPXL.png" height="400"> <img src="https://i.imgur.com/j5ojopS.png" height="400"> <img src="https://i.imgur.com/myZeoC1.png" height="400">
 
 ## Mission Statement
 Empower people to accomplish more by implementing a daily morning ritual.
