@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,7 +46,7 @@ public class CustomizeFragment extends Fragment {
         inflaterView = inflater.inflate(R.layout.fragment_customize, container, false);
         loadRitualsFromFile();
         setUpAddButton();
-        setUpRemoveLastButton();
+        //setUpRemoveLastButton();
         setupListAdapter(inflaterView);
         return inflaterView;
     }
@@ -68,7 +69,8 @@ public class CustomizeFragment extends Fragment {
 
         );
     }
-    private void setUpRemoveLastButton(){
+
+    /*private void setUpRemoveLastButton(){
         Button button = inflaterView.findViewById(R.id.removeHabit);
         button.setOnClickListener(new View.OnClickListener(){
 
@@ -80,13 +82,15 @@ public class CustomizeFragment extends Fragment {
 
         );
     }
+
     private void removeLastHabit(){
         String taskToRemove = morningRituals.get(morningRituals.size()-1);
         ritualState.remove(taskToRemove);
         morningRituals.remove(taskToRemove);
 
         arrayAdapter.notifyDataSetChanged();
-    }
+    }*/
+
     private void addHabit(){
         EditText editText = inflaterView.findViewById(R.id.editAdd);
         String task = editText.getText().toString();
@@ -94,6 +98,7 @@ public class CustomizeFragment extends Fragment {
         ritualState.put(task, false);
         arrayAdapter.notifyDataSetChanged();
     }
+
     private void loadRitualsFromFile() {
         File root = new File(containerActivity.getExternalFilesDir(null) + "/list");
             try
@@ -122,12 +127,20 @@ public class CustomizeFragment extends Fragment {
         }
     }
 
-
-
     // find a way to show it better with things not accomplished? or maybe checked checkboxes
 
     private void setupListAdapter(View inflater){
         ritualListView = (ListView)inflater.findViewById(R.id.listCustomize);
+        ritualListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //ritualListView.removeViewAt(position);
+                String taskToRemove = morningRituals.get(position);
+                ritualState.remove(taskToRemove);
+                morningRituals.remove(position);
+                arrayAdapter.notifyDataSetChanged();
+            }
+        });
         Collections.sort(morningRituals);
         arrayAdapter = new ArrayAdapter<String>(containerActivity,
                 R.layout.customize_row, R.id.customizeText, morningRituals);
@@ -149,6 +162,4 @@ public class CustomizeFragment extends Fragment {
             e.printStackTrace();
         }
     }
-
-
 }

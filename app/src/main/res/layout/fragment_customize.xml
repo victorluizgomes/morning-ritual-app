@@ -56,7 +56,18 @@
             android:text="add" />
     </LinearLayout>
 
-    <Button
+    <TextView
+        android:id="@+id/removeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        style="@style/normalText"
+        android:text="@string/remove_text"
+        app:layout_constraintTop_toBottomOf="@+id/editAndAdd"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <!--<Button
         android:id="@+id/removeHabit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -64,6 +75,6 @@
         android:text="remove last habit"
         app:layout_constraintTop_toBottomOf="@+id/editAndAdd"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

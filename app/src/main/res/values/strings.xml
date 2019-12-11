@@ -3,7 +3,6 @@
     <string name="title_activity_stats">StatsActivity</string>
     <string name="placeholder_motivation_quote">You are a badass, a skyscrapper is built by placing one brick a day - Victor Gomes</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="help_title">Help Page</string>
     <string name="help_body">Customization: When first starting the app, you should use the \"customize\" button in the home page
@@ -18,4 +17,5 @@
         using the calendar spinner and pressing the \"see day\" button.\n\nDay Page:
         The day page will show you the picture you took for that day if any and all the things you checked off.
     </string>
+    <string name="remove_text">HINT: Remove an item by clicking on it.</string>
 </resources>
