@@ -105,7 +105,9 @@ public class MainPageFragment extends Fragment {
                     morningRituals.add(task);
                     ritualState.put(task, tasks.get(task));
             }
+            Collections.sort(morningRituals);
         }
+
         catch(Exception e){
             e.printStackTrace();
         }
